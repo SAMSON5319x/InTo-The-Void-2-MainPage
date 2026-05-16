@@ -1,0 +1,176 @@
+* {
+  min-width: 0;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Extra small devices (phones, 480px and down) */
+@media (max-width: 480px) {
+  .px-margin-desktop {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .text-display-lg {
+    font-size: clamp(1.5rem, 8vw, 2.5rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  .text-headline-xl {
+    font-size: clamp(1.25rem, 6vw, 2rem) !important;
+    line-height: 1.2 !important;
+  }
+
+  .text-headline-lg {
+    font-size: clamp(1.125rem, 5vw, 1.75rem) !important;
+    line-height: 1.2 !important;
+  }
+
+  .text-body-lg {
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .text-body-md {
+    font-size: 0.8125rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .gap-gutter {
+    gap: 12px !important;
+  }
+
+  .min-w-\[120px\] {
+    min-width: 80px !important;
+  }
+
+  .text-\[120px\] {
+    font-size: 64px !important;
+  }
+
+  .text-\[220px\] {
+    font-size: 96px !important;
+  }
+
+  .whitespace-nowrap {
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+
+  .holo-wall-title {
+    word-break: break-word !important;
+  }
+}
+
+/* Small devices (tablets, 768px and down) */
+@media (max-width: 768px) {
+  .px-margin-desktop {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .text-display-lg {
+    font-size: clamp(2.25rem, 7vw, 3.5rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  .text-headline-xl {
+    font-size: clamp(1.75rem, 5vw, 2.5rem) !important;
+    line-height: 1.2 !important;
+  }
+
+  .text-headline-lg {
+    font-size: clamp(1.5rem, 4.2vw, 2rem) !important;
+    line-height: 1.2 !important;
+  }
+
+  .text-body-lg {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .text-body-md {
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .gap-gutter {
+    gap: 16px !important;
+  }
+
+  .min-w-\[120px\] {
+    min-width: 96px !important;
+  }
+
+  .holo-wall-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .holo-wall-title {
+    flex-wrap: wrap !important;
+    row-gap: 6px !important;
+  }
+
+  .holo-wall-meta {
+    align-self: flex-start !important;
+  }
+}
+
+/* Medium devices (small laptops, 1024px and down) */
+@media (max-width: 1024px) {
+  .px-margin-desktop {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .max-w-\[1920px\] {
+    max-width: 100% !important;
+  }
+
+  .scale-105 {
+    transform: none !important;
+  }
+}
+
+/* Large devices (14-inch laptops, 1366px and down) */
+@media (max-width: 1366px) {
+  .px-margin-desktop {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+
+  .text-display-lg {
+    font-size: clamp(3rem, 5vw, 4rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  .text-headline-xl {
+    font-size: clamp(2.25rem, 4vw, 3rem) !important;
+    line-height: 1.2 !important;
+  }
+
+  .text-headline-lg {
+    font-size: clamp(1.875rem, 3.5vw, 2.5rem) !important;
+    line-height: 1.2 !important;
+  }
+}
+
+/* Extra large devices (16-inch laptops and larger, 1920px and up) */
+@media (min-width: 1920px) {
+  .px-margin-desktop {
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+  }
+
+  .max-w-\[1440px\] {
+    max-width: 1920px !important;
+  }
+}

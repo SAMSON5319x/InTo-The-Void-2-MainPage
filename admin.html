@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Into the Void 2.0 | COMMAND CENTER</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="assets/css/responsive.css" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #000000;
+            background-image: 
+                linear-gradient(rgba(0, 219, 233, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 219, 233, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+            color: #e2e2e2;
+            overflow-x: hidden;
+        }
+        .scanline-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0.03;
+        }
+        .glitch-border {
+            position: relative;
+        }
+        .glitch-border::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(90deg, #00dbe9, #d05bff, #00dbe9);
+            z-index: -1;
+            opacity: 0.3;
+        }
+        .glass-panel {
+            background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 219, 233, 0.2);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#00363a",
+                      "on-tertiary-fixed": "#380038",
+                      "tertiary-fixed-dim": "#ffabf3",
+                      "on-secondary-fixed-variant": "#75009e",
+                      "inverse-primary": "#006970",
+                      "secondary": "#ecb1ff",
+                      "on-background": "#e2e2e2",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary-container": "#a900a9",
+                      "inverse-on-surface": "#303030",
+                      "error": "#ffb4ab",
+                      "on-primary-container": "#006970",
+                      "surface-container": "#1f1f1f",
+                      "surface-container-highest": "#353535",
+                      "error-container": "#93000a",
+                      "secondary-container": "#d05bff",
+                      "primary-container": "#00f0ff",
+                      "surface-bright": "#393939",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-surface-variant": "#b9cacb",
+                      "tertiary-fixed": "#ffd7f5",
+                      "tertiary": "#fff3f9",
+                      "primary-fixed": "#7df4ff",
+                      "on-secondary": "#520070",
+                      "on-error": "#690005",
+                      "outline": "#849495",
+                      "surface-dim": "#131313",
+                      "on-primary-fixed-variant": "#004f54",
+                      "inverse-surface": "#e2e2e2",
+                      "tertiary-container": "#ffc9f4",
+                      "surface-container-low": "#1b1b1b",
+                      "background": "#131313",
+                      "surface-variant": "#353535",
+                      "on-secondary-container": "#480063",
+                      "surface-tint": "#00dbe9",
+                      "outline-variant": "#3b494b",
+                      "primary": "#dbfcff",
+                      "on-tertiary-fixed-variant": "#810081",
+                      "secondary-fixed-dim": "#ecb1ff",
+                      "primary-fixed-dim": "#00dbe9",
+                      "on-secondary-fixed": "#320046",
+                      "on-primary-fixed": "#002022",
+                      "surface-container-high": "#2a2a2a",
+                      "surface": "#131313",
+                      "on-tertiary": "#5b005b",
+                      "on-surface": "#e2e2e2",
+                      "secondary-fixed": "#f9d8ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "grid-columns": "12",
+                      "margin-desktop": "64px",
+                      "gutter": "24px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "body-md": ["JetBrains Mono"],
+                      "label-caps": ["Space Mono"],
+                      "headline-lg": ["Space Grotesk"],
+                      "headline-lg-mobile": ["Space Grotesk"],
+                      "display-lg": ["Space Grotesk"],
+                      "body-lg": ["JetBrains Mono"],
+                      "headline-xl": ["Space Grotesk"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "display-lg": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="font-body-md text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<div class="scanline-overlay"></div>
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-[100] bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-primary/30 shadow-[0_0_15px_rgba(0,219,233,0.3)]">
+<div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop h-20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border border-primary/40 bg-surface-container-lowest flex items-center justify-center shadow-[0_0_10px_rgba(0,219,233,0.2)]">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">hive</span>
+</div>
+<span class="font-display-lg text-headline-lg font-black text-primary dark:text-primary-fixed-dim uppercase italic">Into the Void 2.0</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps" href="index.html">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps" href="event.html">Event</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps" href="fee.html">Registration</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps" href="sponsors.html">Sponser</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps" href="contact.html">Contect</a>
+</nav>
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full border border-secondary/40 bg-secondary/10 flex items-center justify-center overflow-hidden shadow-[0_0_10px_rgba(208,91,255,0.2)]">
+<span class="material-symbols-outlined text-secondary text-xl">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-40 pb-12 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+<!-- Metrics Header -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter mb-gutter">
+<div class="glass-panel p-4 border-l-4 border-l-primary shadow-[0_0_10px_rgba(0,219,233,0.1)]">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-[10px] text-primary">CPU_LOAD</span>
+<span class="font-body-md text-xs text-primary/60">0x4F2A</span>
+</div>
+<div class="text-headline-lg font-bold text-primary">42.8%</div>
+<div class="w-full h-1 bg-surface-container mt-2">
+<div class="h-full bg-primary" style="width: 42%;"></div>
+</div>
+</div>
+<div class="glass-panel p-4 border-l-4 border-l-secondary shadow-[0_0_10px_rgba(208,91,255,0.1)]">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-[10px] text-secondary">NET_TRAFFIC</span>
+<span class="font-body-md text-xs text-secondary/60">NODE_B7</span>
+</div>
+<div class="text-headline-lg font-bold text-secondary">1.2 GB/s</div>
+<div class="w-full h-1 bg-surface-container mt-2">
+<div class="h-full bg-secondary" style="width: 78%;"></div>
+</div>
+</div>
+<div class="glass-panel p-4 border-l-4 border-l-tertiary shadow-[0_0_10px_rgba(255,243,249,0.1)]">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-[10px] text-tertiary">SYNC_LEVEL</span>
+<span class="font-body-md text-xs text-tertiary/60">STABLE</span>
+</div>
+<div class="text-headline-lg font-bold text-tertiary">99.9%</div>
+<div class="w-full h-1 bg-surface-container mt-2">
+<div class="h-full bg-tertiary" style="width: 99%;"></div>
+</div>
+</div>
+<div class="glass-panel p-4 border-l-4 border-l-error shadow-[0_0_10px_rgba(255,180,171,0.1)]">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-[10px] text-error">THREAD_ERR</span>
+<span class="font-body-md text-xs text-error/60">CRITICAL</span>
+</div>
+<div class="text-headline-lg font-bold text-error">03</div>
+<div class="flex gap-1 mt-2">
+<div class="h-1 flex-1 bg-error"></div>
+<div class="h-1 flex-1 bg-error"></div>
+<div class="h-1 flex-1 bg-error"></div>
+<div class="h-1 flex-1 bg-surface-container"></div>
+</div>
+</div>
+</div>
+<!-- Full Width Dashboard Components -->
+<div class="space-y-gutter">
+<!-- Registration Flux (Expanded Chart) -->
+<div class="glass-panel p-6 relative overflow-hidden">
+<div class="absolute top-4 right-4 text-[10px] font-body-md text-primary/40 uppercase">Registration Flux // Live Feed</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-8 tracking-tighter">REGISTRATION_FLUX</h2>
+<div class="flex items-end justify-between h-80 gap-3">
+<!-- Bars -->
+<div class="flex-1 bg-primary/10 hover:bg-primary/30 transition-all cursor-pointer relative group h-[35%]">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity font-body-md">10.1k</div>
+</div>
+<div class="flex-1 bg-primary/15 hover:bg-primary/35 transition-all cursor-pointer relative group h-[45%]">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity font-body-md">14.2k</div>
+</div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-all cursor-pointer relative group h-[40%]">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity font-body-md">12.4k</div>
+</div>
+<div class="flex-1 bg-primary/25 hover:bg-primary/45 transition-all cursor-pointer relative group h-[60%]">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity font-body-md">18.9k</div>
+</div>
+<div class="flex-1 bg-primary/30 hover:bg-primary/50 transition-all cursor-pointer relative group h-[85%]">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity font-body-md">24.1k</div>
+</div>
+<div class="flex-1 bg-primary/25 hover:bg-primary/45 transition-all cursor-pointer relative group h-[55%]">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity font-body-md">15.2k</div>
+</div>
+<div class="flex-1 bg-primary-container hover:brightness-125 transition-all cursor-pointer relative group h-[95%]">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 text-[12px] font-bold text-primary font-body-md bg-black/80 px-2 py-1 border border-primary">32.8k</div>
+</div>
+<div class="flex-1 bg-primary/35 hover:bg-primary/55 transition-all cursor-pointer relative group h-[70%]">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity font-body-md">21.0k</div>
+</div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-all cursor-pointer relative group h-[45%]">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity font-body-md">13.5k</div>
+</div>
+<div class="flex-1 bg-primary/15 hover:bg-primary/35 transition-all cursor-pointer relative group h-[30%]">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity font-body-md">9.8k</div>
+</div>
+<div class="flex-1 bg-primary/10 hover:bg-primary/30 transition-all cursor-pointer relative group h-[20%]">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity font-body-md">5.4k</div>
+</div>
+</div>
+<div class="flex justify-between mt-6 border-t border-primary/20 pt-4 font-label-caps text-[10px] text-on-surface-variant">
+<span>00:00</span><span>02:00</span><span>04:00</span><span>06:00</span><span>08:00</span><span>10:00</span><span>12:00</span><span>14:00</span><span>16:00</span><span>18:00</span><span>20:00</span><span>22:00</span><span>23:59</span>
+</div>
+</div>
+<!-- The Grid (Expanded Visualization) -->
+<div class="glass-panel p-6">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tighter">THE_GRID</h2>
+<div class="flex gap-4">
+<span class="text-[10px] font-body-md bg-secondary/20 text-secondary px-3 py-1 flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-secondary rounded-full animate-pulse"></span> SCAN_ACTIVE
+                </span>
+<div class="bg-surface-container-low px-4 py-1 flex items-center gap-6">
+<div class="flex flex-col">
+<span class="text-[8px] text-on-surface-variant font-label-caps">COORDINATES</span>
+<span class="text-[10px] font-body-md text-primary">34.0522° N, 118.2437° W</span>
+</div>
+<div class="w-[1px] h-6 bg-primary/20"></div>
+<div class="flex flex-col">
+<span class="text-[8px] text-on-surface-variant font-label-caps">ACTIVE_NODES</span>
+<span class="text-[10px] font-body-md text-secondary">1,402 / 2,000</span>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full h-[500px] bg-black relative border border-secondary/20 overflow-hidden group rounded-lg">
+<img class="w-full h-full object-cover opacity-50 grayscale group-hover:scale-105 transition-transform duration-[10s]" data-alt="A dark, high-contrast satellite view map of a futuristic urban landscape at night. Glowing cyan and magenta circuit-like lines trace the streets and data pathways. Digital glitch effects and floating UI markers indicate participant locations in a cinematic cyberpunk mission control style with deep obsidian backgrounds and neon accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMVEtnHfZjCb_kS5uo2ZlNZvLK_PJ8uGuNkBCoUqNrUqPylZFvKW8-2uu7dCguyOlvQLh37aapJWVsqlk47mVJfnWjKICYztNttzccUuL5Q2tlZXcakVBrp1ZHL9kEGQ-A9XinQdHTMg51u_YeibMvw5fwuLhnNeVXRHPxkp9G2LBsvhrMYg74a8xCJYI195AfyP8N4PUaOjA52oj6bFLn8bR57FjZNiwLQ8Pdasomd6k1YjyPIwiqMfYfpO76ERTKbYkn2sABBx8"/>
+<!-- Interactive Map Overlays -->
+<div class="absolute top-1/4 left-1/4 w-4 h-4 bg-primary rounded-full animate-pulse shadow-[0_0_15px_#00dbe9]"></div>
+<div class="absolute bottom-1/4 right-1/3 w-4 h-4 bg-secondary rounded-full animate-pulse shadow-[0_0_15px_#ecb1ff]"></div>
+<div class="absolute top-1/2 right-1/2 w-4 h-4 bg-primary rounded-full animate-pulse shadow-[0_0_15px_#00dbe9]"></div>
+<div class="absolute bottom-1/2 left-1/3 w-4 h-4 bg-tertiary rounded-full animate-pulse shadow-[0_0_15px_#ffd7f5]"></div>
+<div class="absolute inset-0 pointer-events-none border border-primary/10 bg-[radial-gradient(circle,transparent_50%,rgba(0,0,0,0.8)_100%)]"></div>
+<!-- Floating UI markers -->
+<div class="absolute top-10 left-10 glass-panel p-2 text-[10px] border-primary/40 font-body-md">VECTOR_SIG_ALPHA: [STABLE]</div>
+<div class="absolute bottom-10 right-10 glass-panel p-2 text-[10px] border-secondary/40 font-body-md">GRID_LOAD_09: [OPTIMAL]</div>
+</div>
+</div>
+<!-- Participant Roster (Full Width Table) -->
+<div class="glass-panel p-6">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tighter">PARTICIPANT_ROSTER</h2>
+<div class="flex flex-wrap gap-4 w-full md:w-auto">
+<div class="relative flex-1 md:flex-none">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container-low border-b border-primary/30 border-t-0 border-x-0 focus:ring-0 focus:border-primary text-xs pl-10 w-full md:w-80 font-body-md" placeholder="FILTER_IDENTITY_BY_NAME_OR_TOKEN" type="text"/>
+</div>
+<button class="flex items-center gap-2 bg-surface-container-highest px-4 py-2 text-[10px] font-label-caps hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-sm">filter_list</span> FILTERS
+                    </button>
+<button class="flex items-center gap-2 bg-primary/20 text-primary px-4 py-2 text-[10px] font-label-caps hover:bg-primary/40 transition-all">
+<span class="material-symbols-outlined text-sm">download</span> EXPORT_LOG
+                    </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-md">
+<thead class="text-on-surface-variant border-b border-surface-container-highest">
+<tr>
+<th class="pb-4 px-4 text-[10px] font-label-caps">ID_TOKEN</th>
+<th class="pb-4 px-4 text-[10px] font-label-caps">ALIAS</th>
+<th class="pb-4 px-4 text-[10px] font-label-caps">SECTOR</th>
+<th class="pb-4 px-4 text-[10px] font-label-caps">UP_TIME</th>
+<th class="pb-4 px-4 text-[10px] font-label-caps">LATENCY</th>
+<th class="pb-4 px-4 text-[10px] font-label-caps">STABILITY</th>
+<th class="pb-4 px-4 text-[10px] font-label-caps text-right">PROTOCOL_ACTION</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest/50">
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="py-5 px-4 text-xs font-bold text-primary">#VX-9021</td>
+<td class="py-5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-sm bg-surface-container-highest flex items-center justify-center text-primary/40 font-black text-xs">NA</div>
+<span class="font-bold">NEON_ARCHITECT</span>
+</div>
+</td>
+<td class="py-5 px-4 text-on-surface-variant">SECTOR_G7</td>
+<td class="py-5 px-4">12:44:02</td>
+<td class="py-5 px-4 font-body-md text-primary text-xs">14ms</td>
+<td class="py-5 px-4">
+<span class="text-secondary text-[10px] font-label-caps bg-secondary/10 px-2 py-0.5 border border-secondary/20">NOMINAL</span>
+</td>
+<td class="py-5 px-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="bg-primary-container/20 text-primary-container px-3 py-1.5 text-[10px] hover:bg-primary-container hover:text-on-primary transition-all font-bold">VERIFY</button>
+<button class="text-error/60 px-3 py-1.5 text-[10px] hover:text-error transition-all hover:bg-error/10">REJECT</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="py-5 px-4 text-xs font-bold text-primary">#VX-9022</td>
+<td class="py-5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-sm bg-surface-container-highest flex items-center justify-center text-primary/40 font-black text-xs">BC</div>
+<span class="font-bold">BIT_CRUSHER</span>
+</div>
+</td>
+<td class="py-5 px-4 text-on-surface-variant">SECTOR_A1</td>
+<td class="py-5 px-4">08:12:15</td>
+<td class="py-5 px-4 font-body-md text-primary text-xs">28ms</td>
+<td class="py-5 px-4">
+<span class="text-primary text-[10px] font-label-caps bg-primary/10 px-2 py-0.5 border border-primary/20">OPTIMAL</span>
+</td>
+<td class="py-5 px-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="bg-primary-container/20 text-primary-container px-3 py-1.5 text-[10px] hover:bg-primary-container hover:text-on-primary transition-all font-bold">VERIFY</button>
+<button class="text-error/60 px-3 py-1.5 text-[10px] hover:text-error transition-all hover:bg-error/10">REJECT</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="py-5 px-4 text-xs font-bold text-primary">#VX-9023</td>
+<td class="py-5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-sm bg-surface-container-highest flex items-center justify-center text-primary/40 font-black text-xs">VW</div>
+<span class="font-bold">VOID_WALKER</span>
+</div>
+</td>
+<td class="py-5 px-4 text-on-surface-variant">SECTOR_G7</td>
+<td class="py-5 px-4">00:04:12</td>
+<td class="py-5 px-4 font-body-md text-primary text-xs">245ms</td>
+<td class="py-5 px-4">
+<span class="text-error text-[10px] font-label-caps bg-error/10 px-2 py-0.5 border border-error/20">DECAYING</span>
+</td>
+<td class="py-5 px-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="bg-primary-container/20 text-primary-container px-3 py-1.5 text-[10px] hover:bg-primary-container hover:text-on-primary transition-all font-bold">VERIFY</button>
+<button class="text-error/60 px-3 py-1.5 text-[10px] hover:text-error transition-all hover:bg-error/10">REJECT</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="py-5 px-4 text-xs font-bold text-primary">#VX-9024</td>
+<td class="py-5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-sm bg-surface-container-highest flex items-center justify-center text-primary/40 font-black text-xs">CH</div>
+<span class="font-bold">CYBER_HUNTER</span>
+</div>
+</td>
+<td class="py-5 px-4 text-on-surface-variant">SECTOR_D3</td>
+<td class="py-5 px-4">15:01:45</td>
+<td class="py-5 px-4 font-body-md text-primary text-xs">12ms</td>
+<td class="py-5 px-4">
+<span class="text-primary text-[10px] font-label-caps bg-primary/10 px-2 py-0.5 border border-primary/20">OPTIMAL</span>
+</td>
+<td class="py-5 px-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="bg-primary-container/20 text-primary-container px-3 py-1.5 text-[10px] hover:bg-primary-container hover:text-on-primary transition-all font-bold">VERIFY</button>
+<button class="text-error/60 px-3 py-1.5 text-[10px] hover:text-error transition-all hover:bg-error/10">REJECT</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-8 flex justify-center">
+<button class="border border-primary/20 px-8 py-2 text-[10px] font-label-caps hover:bg-primary/10 transition-all text-primary">LOAD_MORE_RECORDS</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Global Broadcast Terminal (Side Button Drawer) -->
+<button id="broadcast-toggle" class="fixed right-0 top-1/2 -translate-y-1/2 z-50 bg-primary text-on-primary font-label-caps text-[9px] tracking-[0.15em] px-3 py-2 rounded-lg shadow-[0_0_20px_rgba(0,219,233,0.35)] hover:brightness-110 transition-all cursor-grab active:cursor-grabbing" type="button" aria-expanded="false" aria-controls="broadcast-panel">
+<span class="flex items-center gap-2">
+<span class="w-2 h-2 bg-on-primary rounded-full animate-ping"></span>
+<span>GLOBAL_BROADCAST_TERMINAL</span>
+</span>
+</button>
+<div id="broadcast-panel" class="fixed hidden z-50 w-80 glass-panel border-t-2 border-t-primary shadow-[0_0_30px_rgba(0,219,233,0.2)]">
+<div class="bg-primary/10 px-4 py-2 flex justify-between items-center">
+<span class="font-label-caps text-[10px] text-primary flex items-center gap-2">
+<span class="w-2 h-2 bg-primary animate-ping rounded-full"></span>
+                GLOBAL_BROADCAST_TERMINAL
+            </span>
+<button class="material-symbols-outlined text-xs cursor-pointer opacity-50 hover:opacity-100" type="button" data-broadcast-close aria-label="Close broadcast terminal">close</button>
+</div>
+<div class="p-4">
+<textarea class="w-full bg-black border border-primary/20 text-xs font-body-md p-3 focus:ring-1 focus:ring-primary h-24 mb-3 resize-none placeholder:text-primary/30" placeholder="ENTER_SYSTEM_COMMAND_OR_ALERT..."></textarea>
+<div class="flex justify-between items-center">
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-sm text-primary/60 cursor-pointer hover:text-primary">emergency</span>
+<span class="material-symbols-outlined text-sm text-primary/60 cursor-pointer hover:text-primary">schedule</span>
+<span class="material-symbols-outlined text-sm text-primary/60 cursor-pointer hover:text-primary">groups</span>
+</div>
+<button class="bg-primary text-on-primary font-bold text-[10px] px-4 py-2 uppercase hover:brightness-110 transition-all">EXECUTE_ALERT</button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full bg-black/95 border-t border-primary/20 py-10">
+<div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop flex flex-col lg:flex-row items-center justify-between gap-8">
+<a class="flex items-center gap-4 group" data-env="CLUB_URL" href="#" aria-label="ExploitX official club page">
+<img src="assets/images/exploitx-logo.png" alt="ExploitX club logo" class="w-12 h-12 rounded-full border border-primary/30 bg-black/40 object-contain"/>
+<div class="flex flex-col">
+<span class="text-primary font-bold font-display-lg text-sm uppercase tracking-wider">ExploitX</span>
+<span class="text-on-surface-variant/60 font-body-md text-[10px] tracking-widest uppercase">Official club page</span>
+</div>
+</a>
+<div class="flex flex-wrap items-center justify-center gap-4">
+<a class="flex items-center gap-2 text-on-surface-variant/70 hover:text-primary transition-all font-label-caps text-[12px] uppercase" data-env="INSTAGRAM_URL" href="#" aria-label="Instagram">
+<span class="material-symbols-outlined text-base">photo_camera</span>
+<span>Instagram</span>
+</a>
+<a class="flex items-center gap-2 text-on-surface-variant/70 hover:text-primary transition-all font-label-caps text-[12px] uppercase" data-env="LINKEDIN_URL" href="#" aria-label="LinkedIn">
+<span class="material-symbols-outlined text-base">work</span>
+<span>LinkedIn</span>
+</a>
+<a class="flex items-center gap-2 text-on-surface-variant/70 hover:text-primary transition-all font-label-caps text-[12px] uppercase" data-env="X_URL" href="#" aria-label="X">
+<span class="material-symbols-outlined text-base">close</span>
+<span>X</span>
+</a>
+<a class="flex items-center gap-2 text-on-surface-variant/70 hover:text-primary transition-all font-label-caps text-[12px] uppercase" data-env="REDDIT_URL" href="#" aria-label="Reddit">
+<span class="material-symbols-outlined text-base">forum</span>
+<span>Reddit</span>
+</a>
+<a class="flex items-center gap-2 text-on-surface-variant/70 hover:text-primary transition-all font-label-caps text-[12px] uppercase" data-env="GITHUB_URL" href="#" aria-label="GitHub">
+<span class="material-symbols-outlined text-base">code</span>
+<span>GitHub</span>
+</a>
+<a class="flex items-center gap-2 text-on-surface-variant/70 hover:text-primary transition-all font-label-caps text-[12px] uppercase" data-env="MASTATON_URL" href="#" aria-label="Mastaton">
+<span class="material-symbols-outlined text-base">hub</span>
+<span>Mastaton</span>
+</a>
+<a class="flex items-center gap-2 text-on-surface-variant/70 hover:text-primary transition-all font-label-caps text-[12px] uppercase" data-env="MAIL_URL" href="#" aria-label="Email">
+<span class="material-symbols-outlined text-base">mail</span>
+<span>Mail</span>
+</a>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-on-surface-variant/60 font-body-md text-[10px] tracking-widest uppercase">
+<div>© 2124 MULTIVERSE_CORE. ALL RIGHTS RESERVED. [RESTRICTED ACCESS]</div>
+<div class="flex flex-wrap items-center justify-center gap-6">
+<a class="hover:text-primary transition-all" href="terms.html">PROTOCOL_TC</a>
+<a class="hover:text-primary transition-all" href="contact.html">CONTACT_NODE</a>
+<a class="hover:text-primary transition-all" href="privacy.html">PRIVACY_ENCRYPT</a>
+<a class="hover:text-primary transition-all" href="sitemap.html">SITEMAP_DIR</a>
+</div>
+</div>
+</footer>
+<script src="assets/js/footer-links.js"></script>
+<script>
+(() => {
+    const toggle = document.getElementById("broadcast-toggle");
+    const panel = document.getElementById("broadcast-panel");
+    if (!toggle || !panel) {
+        return;
+    }
+
+    const closeButton = panel.querySelector("[data-broadcast-close]");
+    let didDrag = false;
+
+    const positionPanel = () => {
+        const rect = toggle.getBoundingClientRect();
+        const panelWidth = panel.offsetWidth;
+        const panelHeight = panel.offsetHeight;
+        const gap = 8;
+
+        const maxTop = window.innerHeight - panelHeight - gap;
+        const nextTop = clamp(rect.top, gap, maxTop);
+        const canPlaceRight = rect.right + gap + panelWidth <= window.innerWidth;
+        const nextLeft = canPlaceRight ? rect.right + gap : rect.left - panelWidth - gap;
+
+        panel.style.top = `${nextTop}px`;
+        panel.style.left = `${clamp(nextLeft, gap, window.innerWidth - panelWidth - gap)}px`;
+    };
+
+    const setOpen = (isOpen) => {
+        panel.classList.toggle("hidden", !isOpen);
+        if (isOpen) {
+            positionPanel();
+        }
+        toggle.setAttribute("aria-expanded", String(isOpen));
+    };
+
+    toggle.addEventListener("click", () => {
+        if (didDrag) {
+            didDrag = false;
+            return;
+        }
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+        setOpen(!isOpen);
+    });
+
+    const closePanel = () => setOpen(false);
+
+    if (closeButton) {
+        closeButton.addEventListener("click", (event) => {
+            event.stopPropagation();
+            closePanel();
+        });
+    }
+
+    let isDragging = false;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+    let dragStartX = 0;
+    let dragStartY = 0;
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    const startDrag = (event) => {
+        const point = event.touches ? event.touches[0] : event;
+        const rect = toggle.getBoundingClientRect();
+
+        isDragging = true;
+        didDrag = false;
+        dragStartX = point.clientX;
+        dragStartY = point.clientY;
+        dragOffsetX = point.clientX - rect.left;
+        dragOffsetY = point.clientY - rect.top;
+
+        toggle.style.right = "auto";
+        toggle.style.left = `${rect.left}px`;
+        toggle.style.top = `${rect.top}px`;
+        toggle.classList.remove("-translate-y-1/2");
+    };
+
+    const dragMove = (event) => {
+        if (!isDragging) {
+            return;
+        }
+
+        const point = event.touches ? event.touches[0] : event;
+        const deltaX = Math.abs(point.clientX - dragStartX);
+        const deltaY = Math.abs(point.clientY - dragStartY);
+        if (deltaX > 3 || deltaY > 3) {
+            didDrag = true;
+        }
+        const maxLeft = window.innerWidth - toggle.offsetWidth;
+        const maxTop = window.innerHeight - toggle.offsetHeight;
+        const nextLeft = clamp(point.clientX - dragOffsetX, 0, maxLeft);
+        const nextTop = clamp(point.clientY - dragOffsetY, 0, maxTop);
+
+        toggle.style.left = `${nextLeft}px`;
+        toggle.style.top = `${nextTop}px`;
+    };
+
+    const endDrag = () => {
+        isDragging = false;
+    };
+
+    toggle.addEventListener("mousedown", startDrag);
+    toggle.addEventListener("touchstart", startDrag, { passive: true });
+    window.addEventListener("mousemove", dragMove);
+    window.addEventListener("touchmove", dragMove, { passive: true });
+    window.addEventListener("mouseup", endDrag);
+    window.addEventListener("touchend", endDrag);
+})();
+</script>
+</body></html>
