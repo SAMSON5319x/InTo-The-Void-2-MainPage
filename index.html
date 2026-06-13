@@ -172,28 +172,45 @@
 <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
                     The simulation is collapsing. Data fragments from parallel nodes are converging into a single critical event. Enter the void and recalibrate the core protocol before synchronization failure.
                 </p>
-<!-- Glitching Countdown Timer -->
-<div class="flex flex-wrap justify-center gap-4 mb-16">
-<div class="bg-surface-container-lowest/80 backdrop-blur-xl border border-primary/20 p-6 min-w-[120px] shadow-[0_0_20px_rgba(0,219,233,0.15)] relative">
-<div class="absolute top-1 right-1 font-label-caps text-[10px] text-primary/40">NODE_01</div>
-<div class="font-display-lg text-headline-xl text-primary font-black">24</div>
-<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">DAYS</div>
-</div>
-<div class="bg-surface-container-lowest/80 backdrop-blur-xl border border-secondary/20 p-6 min-w-[120px] shadow-[0_0_20px_rgba(208,91,255,0.15)] relative">
-<div class="absolute top-1 right-1 font-label-caps text-[10px] text-secondary/40">NODE_02</div>
-<div class="font-display-lg text-headline-xl text-secondary font-black">08</div>
-<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">HRS</div>
-</div>
-<div class="bg-surface-container-lowest/80 backdrop-blur-xl border border-primary/20 p-6 min-w-[120px] shadow-[0_0_20px_rgba(0,219,233,0.15)] relative">
-<div class="absolute top-1 right-1 font-label-caps text-[10px] text-primary/40">NODE_03</div>
-<div class="font-display-lg text-headline-xl text-primary font-black">42</div>
-<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">MIN</div>
-</div>
-<div class="bg-surface-container-lowest/80 backdrop-blur-xl border border-error/20 p-6 min-w-[120px] shadow-[0_0_20px_rgba(255,180,171,0.15)] relative">
-<div class="absolute top-1 right-1 font-label-caps text-[10px] text-error/40">ERR_SYNC</div>
-<div class="font-display-lg text-headline-xl text-error font-black">15</div>
-<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">SEC</div>
-</div>
+<!-- Enhanced Holographic Countdown Timer -->
+<div class="flex flex-wrap justify-center gap-6 md:gap-8 mb-16 px-4">
+    
+    <!-- Days -->
+    <div class="timer-block group">
+        <div class="timer-block-inner">
+            <div class="absolute top-4 font-label-caps text-[9px] text-primary/50 tracking-widest">NODE_01</div>
+            <div id="timer-days" class="font-display-lg text-4xl md:text-5xl text-primary font-black drop-shadow-[0_0_10px_rgba(0,219,233,0.8)]">24</div>
+            <div class="font-label-caps text-[10px] md:text-xs text-on-surface-variant uppercase tracking-[0.2em] mt-1">DAYS</div>
+        </div>
+    </div>
+
+    <!-- Hours -->
+    <div class="timer-block secondary-theme group" style="box-shadow: inset 0 0 20px rgba(208,91,255,0.2), 0 5px 15px rgba(0,0,0,0.6); border-color: rgba(208,91,255,0.3);">
+        <div class="timer-block-inner">
+            <div class="absolute top-4 font-label-caps text-[9px] text-secondary/50 tracking-widest">NODE_02</div>
+            <div id="timer-hours" class="font-display-lg text-4xl md:text-5xl text-secondary font-black drop-shadow-[0_0_10px_rgba(208,91,255,0.8)]">08</div>
+            <div class="font-label-caps text-[10px] md:text-xs text-on-surface-variant uppercase tracking-[0.2em] mt-1">HRS</div>
+        </div>
+    </div>
+
+    <!-- Minutes -->
+    <div class="timer-block group">
+        <div class="timer-block-inner">
+            <div class="absolute top-4 font-label-caps text-[9px] text-primary/50 tracking-widest">NODE_03</div>
+            <div id="timer-minutes" class="font-display-lg text-4xl md:text-5xl text-primary font-black drop-shadow-[0_0_10px_rgba(0,219,233,0.8)]">42</div>
+            <div class="font-label-caps text-[10px] md:text-xs text-on-surface-variant uppercase tracking-[0.2em] mt-1">MIN</div>
+        </div>
+    </div>
+
+    <!-- Seconds -->
+    <div class="timer-block error-theme group" style="box-shadow: inset 0 0 20px rgba(255,180,171,0.2), 0 5px 15px rgba(0,0,0,0.6); border-color: rgba(255,180,171,0.3);">
+        <div class="timer-block-inner">
+            <div class="absolute top-4 font-label-caps text-[9px] text-error/50 tracking-widest animate-pulse">ERR_SYNC</div>
+            <div id="timer-seconds" class="font-display-lg text-4xl md:text-5xl text-error font-black drop-shadow-[0_0_10px_rgba(255,180,171,0.8)] animate-[pulse_1s_ease-in-out_infinite]">15</div>
+            <div class="font-label-caps text-[10px] md:text-xs text-on-surface-variant uppercase tracking-[0.2em] mt-1">SEC</div>
+        </div>
+    </div>
+
 </div>
 <div class="flex flex-col md:flex-row items-center justify-center gap-6">
 <button class="group relative px-10 py-5 bg-primary-fixed-dim text-on-primary font-label-caps text-label-caps font-bold overflow-hidden transition-all hover:scale-105 active:skew-x-12">
@@ -377,4 +394,35 @@
 </div>
 </footer>
 <script src="assets/js/footer-links.js"></script>
+<script>
+    // Initialize countdown target
+    const eventDate = new Date();
+    eventDate.setDate(eventDate.getDate() + 24);
+    eventDate.setHours(eventDate.getHours() + 8);
+    eventDate.setMinutes(eventDate.getMinutes() + 42);
+    eventDate.setSeconds(eventDate.getSeconds() + 15);
+
+    function updateTimer() {
+        const now = new Date().getTime();
+        const distance = eventDate.getTime() - now;
+
+        if (distance < 0) {
+            return; // Timer reached zero
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("timer-days").innerText = days.toString().padStart(2, '0');
+        document.getElementById("timer-hours").innerText = hours.toString().padStart(2, '0');
+        document.getElementById("timer-minutes").innerText = minutes.toString().padStart(2, '0');
+        document.getElementById("timer-seconds").innerText = seconds.toString().padStart(2, '0');
+    }
+
+    // Update the timer every second
+    setInterval(updateTimer, 1000);
+    updateTimer(); // Initial call to avoid 1s delay
+</script>
 </body></html>
