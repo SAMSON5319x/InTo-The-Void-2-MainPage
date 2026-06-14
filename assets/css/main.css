@@ -252,3 +252,89 @@
   opacity: 1;
   transform: translate3d(0%, -30%, 100px);
 }
+
+/* DOT MATRIX CSS */
+:root {
+  --width: 60;
+  --height: 30;
+  --border-w: 2px;
+  --big-pd: 2rem;
+  --corner-radius: 2rem;
+  --out-border-w: 2px;
+  --out-border-color: #1c1c1c;
+}
+
+#matrix {
+  width: calc(60 * 5px + 59 * 3px);
+  display: grid;
+  grid-template-columns: repeat(var(--width), 0fr);
+  grid-template-rows: repeat(var(--height), 0fr);
+  gap: 3px;
+  padding: 1rem 1rem 1.2rem;
+  box-sizing: content-box;
+  border-radius: 1rem;
+  position: relative;
+  background: linear-gradient(180deg, #1c1d1f 0%, #212224 87.18%, #313235 100%);
+  box-shadow: 0px -4px 0px 0px rgba(0, 0, 0, 0.7) inset,
+    0px 1.946px 0px 0px rgba(0, 0, 0, 0.29),
+    0px 3.508px 0px 0px rgba(0, 0, 0, 0.38),
+    0px 5.301px 0px 0px rgba(0, 0, 0, 0.45),
+    0px 17px 43px 0px rgba(0, 0, 0, 0.64);
+  margin: 0 auto;
+}
+
+#matrix:before {
+  content: "";
+  position: absolute;
+  display: block;
+  left: calc(-1 * var(--border-w));
+  top: calc(-1 * var(--border-w));
+  right: calc(-1 * var(--border-w));
+  bottom: calc(-1 * var(--border-w));
+  background: linear-gradient(180deg, rgba(46, 45, 46, 1) 0%, rgba(3, 2, 3, 1) 100%);
+  z-index: -2;
+  border-radius: calc(1rem + var(--border-w));
+}
+
+#matrix .dot {
+  width: 5px;
+  height: 5px;
+  background-color: #0e0e0e;
+  transition: background-color 0.5s;
+  border-radius: 50%;
+}
+
+#matrix .dot:first-child,
+#matrix .dot:nth-child(60),
+#matrix .dot:nth-child(1741),
+#matrix .dot:last-child {
+  opacity: 0;
+}
+
+#matrix .active {
+  background-color: #00dbe9;
+  box-shadow: 0px 0px 6px rgba(0, 219, 233, 0.8);
+}
+
+.border-matrix {
+  padding: 2rem;
+  border: 2px solid #3f3e3f00;
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .border-matrix {
+    transform: scale(0.8);
+    transform-origin: center top;
+  }
+}
+@media (max-width: 500px) {
+  .border-matrix {
+    transform: scale(0.5);
+    transform-origin: center top;
+  }
+}
