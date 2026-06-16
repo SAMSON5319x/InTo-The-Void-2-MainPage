@@ -21,25 +21,35 @@
 <main class="pt-32  pb-32 mb-20 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto min-h-screen">
 <div class="max-w-4xl mx-auto">
     <div class="flex flex-col gap-2 mb-8 text-center">
-        <span class="font-label-caps text-label-caps tracking-[0.3em] uppercase" style="color:#d05bff;">Registration Node: 0x1A_CTF</span>
+        <span class="font-label-caps text-label-caps tracking-[0.3em] uppercase" style="color:#d05bff;">Team Registration Node: 0x1A_CTF</span>
         <h1 class="font-display-lg text-headline-xl tracking-tighter italic" style="color:#00dbe9; text-shadow: 0 0 20px rgba(0,219,233,0.4);">CTF_REGISTRATION</h1>
     </div>
     <div class="glass-panel p-8 relative z-10 rounded-2xl border-t-2 border-primary">
         <div class="absolute top-4 right-4 text-[10px] font-mono text-secondary/40">STATUS: UPLINK_READY</div>
         <form class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="group relative border border-primary/30 rounded-xl bg-black/40 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-colors overflow-hidden">
-                <label class="font-label-caps text-[10px] uppercase tracking-widest block mb-2 px-4 pt-3" style="color:rgba(0,219,233,0.6);">Full_Name</label>
+                <label class="font-label-caps text-[10px] uppercase tracking-widest block mb-2 px-4 pt-3" style="color:rgba(0,219,233,0.6);">Team_Name</label>
+                <input class="w-full bg-transparent text-primary outline-none font-body-lg placeholder:text-surface-variant border-none focus:ring-0 px-4 pb-3" placeholder="Team Name" required type="text"/>
+            </div>
+            <div class="group relative border border-primary/30 rounded-xl bg-black/40 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-colors overflow-hidden">
+                <label class="font-label-caps text-[10px] uppercase tracking-widest block mb-2 px-4 pt-3" style="color:rgba(0,219,233,0.6);">Team_Status</label>
+                <select class="w-full bg-transparent text-primary outline-none font-body-lg placeholder:text-surface-variant border-none focus:ring-0 px-4 pb-3 appearance-none" required>
+                    <option value="1" class="bg-black text-white">Solo/Invidual</option>
+                    <option value="2" class="bg-black text-white">2 members</option>
+                </select>
+                 </div>
+             <div class="group relative border border-primary/30 rounded-xl bg-black/40 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-colors overflow-hidden">
+                <label class="font-label-caps text-[10px] uppercase tracking-widest block mb-2 px-4 pt-3" style="color:rgba(0,219,233,0.6);">Member_2_Name</label>
                 <input class="w-full bg-transparent text-primary outline-none font-body-lg placeholder:text-surface-variant border-none focus:ring-0 px-4 pb-3" placeholder="Enter your full name" required type="text"/>
             </div>
-             <div class="group relative border border-primary/30 rounded-xl bg-black/40 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-colors overflow-hidden">
+            <div class="group relative border border-primary/30 rounded-xl bg-black/40 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-colors overflow-hidden">
                 <label class="font-label-caps text-[10px] uppercase tracking-widest block mb-2 px-4 pt-3" style="color:rgba(0,219,233,0.6);">Gender</label>
                 <select class="w-full bg-transparent text-primary outline-none font-body-lg placeholder:text-surface-variant border-none focus:ring-0 px-4 pb-3 appearance-none" required>
                     <option value="1" class="bg-black text-white">Male</option>
                     <option value="2" class="bg-black text-white">Female</option>
                     <option value="3" class="bg-black text-white">Other</option>
                 </select>
-                
-            </div>
+                </div>
             <div class="group relative border border-secondary/30 rounded-xl bg-black/40 focus-within:border-secondary focus-within:ring-1 focus-within:ring-secondary transition-colors overflow-hidden">
                 <label class="font-label-caps text-[10px] uppercase tracking-widest block mb-2 px-4 pt-3" style="color:rgba(208,91,255,0.6);">Email_ID</label>
                 <input class="w-full bg-transparent text-secondary outline-none font-body-lg placeholder:text-surface-variant border-none focus:ring-0 px-4 pb-3" placeholder="user@domain.com" required type="email"/>
@@ -48,13 +58,36 @@
                 <label class="font-label-caps text-[10px] uppercase tracking-widest block mb-2 px-4 pt-3" style="color:rgba(0,219,233,0.6);">Mobile_Number</label>
                 <input class="w-full bg-transparent text-primary outline-none font-body-lg placeholder:text-surface-variant border-none focus:ring-0 px-4 pb-3" placeholder="+91 9876543210" required type="tel"/>
             </div>
-            <div class="group relative border border-secondary/30 rounded-xl bg-black/40 focus-within:border-secondary focus-within:ring-1 focus-within:ring-secondary transition-colors overflow-hidden">
-                <label class="font-label-caps text-[10px] uppercase tracking-widest block mb-2 px-4 pt-3" style="color:rgba(208,91,255,0.6);">College_Name</label>
-                <select class="w-full bg-transparent text-primary outline-none font-body-lg placeholder:text-surface-variant border-none focus:ring-0 px-4 pb-3 appearance-none" required>
-                    <option value="" class="bg-black text-white">Chennai Institute of Technology</option>
-                    <option value="" class="bg-black text-white">SRM Institute of Science and Technology</option>
-                  
-                </select> </div>
+          <!-- College Name -->
+<div class="group relative border border-secondary/30 rounded-xl bg-black/40 focus-within:border-secondary focus-within:ring-1 focus-within:ring-secondary transition-colors overflow-hidden">
+    <label class="font-label-caps text-[10px] uppercase tracking-widest block mb-2 px-4 pt-3"
+        style="color:rgba(208,91,255,0.6);">
+        College_Name
+    </label>
+
+    <select id="collegeSelect"
+        onchange="toggleOtherCollege()"
+        class="w-full bg-transparent text-secondary outline-none font-body-lg border-none focus:ring-0 px-4 pb-3 appearance-none"
+        required>
+        <option value="">Select College</option>
+        <option value="Chennai Institute of Technology">Chennai Institute of Technology</option>
+        <option value="other">Other</option>
+    </select>
+</div>
+<!-- Other College Input (Hidden by Default) -->
+<div id="otherCollegeContainer"
+    class="group relative border border-secondary/30 rounded-xl bg-black/40 overflow-hidden hidden">
+    
+    <label class="font-label-caps text-[10px] uppercase tracking-widest block mb-2 px-4 pt-3"
+        style="color:rgba(208,91,255,0.6);">
+        Other_College_Name
+    </label>
+
+    <input type="text"
+        id="otherCollege"
+        placeholder="Enter your college name"
+        class="w-full bg-transparent text-secondary outline-none font-body-lg placeholder:text-surface-variant border-none focus:ring-0 px-4 pb-3">
+</div>
             <div class="group relative border border-primary/30 rounded-xl bg-black/40 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-colors overflow-hidden">
                 <label class="font-label-caps text-[10px] uppercase tracking-widest block mb-2 px-4 pt-3" style="color:rgba(0,219,233,0.6);">Degree</label>
                 <input class="w-full bg-transparent text-primary outline-none font-body-lg placeholder:text-surface-variant border-none focus:ring-0 px-4 pb-3" placeholder="E.g., B.Tech, B.E, B.Sc" required type="text"/>
@@ -72,8 +105,7 @@
                     <option value="3" class="bg-black text-white">3rd Year</option>
                     <option value="4" class="bg-black text-white">4th Year</option>
                 </select>
-                
-            </div>
+                </div>
             <div class="group relative border border-secondary/30 rounded-xl bg-black/40 focus-within:border-secondary focus-within:ring-1 focus-within:ring-secondary transition-colors overflow-hidden">
                 <label class="font-label-caps text-[10px] uppercase tracking-widest block mb-2 px-4 pt-3" style="color:rgba(208,91,255,0.6);">Location</label>
                 <input class="w-full bg-transparent text-secondary outline-none font-body-lg placeholder:text-surface-variant border-none focus:ring-0 px-4 pb-3" placeholder="City / District" required type="text"/>
